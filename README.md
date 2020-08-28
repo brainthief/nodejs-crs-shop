@@ -17,4 +17,6 @@ docker-compose up -d
 docker stop $(docker ps -a -q)
 //rebuild container
 docker-compose up -d --no-deps --build web
+//logs tail
+docker logs -f --tail 10 nodejs-crs-shop_web_1
 ```
