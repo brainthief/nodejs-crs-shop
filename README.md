@@ -15,4 +15,6 @@ You can always do that by pressing CTRL + C in the terminal/ command prompt wind
 docker-compose up -d
 //stop app
 docker stop $(docker ps -a -q)
+//rebuild container
+docker-compose up -d --no-deps --build web
 ```
