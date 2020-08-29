@@ -7,12 +7,40 @@ services:
    - .:/usr/app/
   ports:
    - "3000:3000"
-  # depends_on:
-  #  - postgres
-  # environment:
-  #  DATABASE_URL: postgres://todoapp@postgres/todos
- # postgres:
- #  image: postgres:9.6.2-alpine
- #  environment:
- #   POSTGRES_USER: todoapp
- #   POSTGRES_DB: todos
+  depends_on:
+   - dbcra
+  links:
+   - dbcra
+
+ #MySQL Service
+ dbcra:
+  image: mysql:5.7.22
+  restart: unless-stopped
+  tty: true
+  ports:
+   - "3306:3306"
+  environment:
+   MYSQL_DATABASE: node-complete
+   MYSQL_ROOT_PASSWORD: nodecomplete
+   SERVICE_TAGS: dev
+   SERVICE_NAME: mysql
+  volumes:
+   - dbdata:/var/lib/mysql/
+   - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+
+ #PHPMyAdmin Service
+ phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  ports:
+   - "8080:80"
+  links:
+   - dbcra
+  environment:
+   PMA_HOST: localhost
+   PMA_PORT: 3306
+   PMA_ARBITRARY: 1
+
+#Volumes
+volumes:
+ dbdata:
+  driver: local

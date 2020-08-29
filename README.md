@@ -20,3 +20,8 @@ docker-compose up -d --no-deps --build web
 //logs tail
 docker logs -f --tail 10 nodejs-crs-shop_web_1
 ```
+
+## PhpMyAdmin
+
+For connect to server use IP, not localhost.
+Or use dbcra
